@@ -3,18 +3,34 @@ using UnityEngine;
 public class PlanetCamera : MonoBehaviour
 {
     public Transform jugador;
-    public float distancia = 10f;
-    public float altura = 5f;
 
-    void FixedUpdate() // Cambia LateUpdate por FixedUpdate
+    public float distancia = 18f;
+    public float altura = 8f;
+    public float suavizado = 5f;
+
+    void LateUpdate()
     {
         if (jugador == null) return;
 
-        Vector3 posicionDeseada = jugador.position + (jugador.up * altura) + (jugador.forward * distancia);
+        // Cámara más alejada y más alta
+        Vector3 posicionDeseada =
+            jugador.position
+            + jugador.up * altura
+            - jugador.forward * distancia;
 
-        // Usa un valor de suavizado (0.125f es un buen punto de partida)
-        transform.position = Vector3.Lerp(transform.position, posicionDeseada, 0.125f);
+        transform.position = Vector3.Lerp(
+            transform.position,
+            posicionDeseada,
+            suavizado * Time.deltaTime
+        );
 
-        transform.LookAt(jugador.position, jugador.up);
+        // Mira al alien, pero un poco por encima para ver más escenario
+        Vector3 puntoMirada = jugador.position + jugador.up * 2f;
+
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            Quaternion.LookRotation(puntoMirada - transform.position, jugador.up),
+            suavizado * Time.deltaTime
+        );
     }
 }

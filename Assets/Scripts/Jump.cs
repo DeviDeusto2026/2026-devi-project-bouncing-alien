@@ -1,57 +1,79 @@
-
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Jump : MonoBehaviour
 {
-    public int jumpForce = 800; // Subido para compensar la gravedad planetaria
-    public int speed = 10;
+    public float speed = 10f;
+    public float jumpForce = 18f;
+
+    private Rigidbody rb;
     private bool canJump;
+    private Vector3 moveDir;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+
+        // IMPORTANTE: la gravedad la hace el planeta, no Unity
+        rb.useGravity = false;
+    }
 
     void Update()
     {
-        Movement();
-        JumIsNeeded();
+        MovementInput();
+        JumpIfNeeded();
     }
 
-    void Movement()
+    void FixedUpdate()
+    {
+        Move();
+    }
+
+    void MovementInput()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        // Calculamos direcciones relativas a la cámara y al suelo
         Vector3 camForward = Vector3.ProjectOnPlane(Camera.main.transform.forward, transform.up).normalized;
         Vector3 camRight = Vector3.ProjectOnPlane(Camera.main.transform.right, transform.up).normalized;
 
-        Vector3 moveDir = (camForward * v + camRight * h).normalized;
+        moveDir = (camForward * v + camRight * h).normalized;
 
         if (moveDir.magnitude > 0.1f)
         {
-            // 1. MOVER: El movimiento siempre es fluido
-            transform.position += moveDir * speed * Time.deltaTime;
-
-            // 2. ROTACIÓN INTELIGENTE:
-            // Solo permitimos que el Alien rote si hay un movimiento lateral (A o D) significativo.
-            // Si solo pulsas W o S, el personaje mantendrá su rotación actual.
-            if (Mathf.Abs(h) > 0.1f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDir, transform.up);
-                // Bajamos a 2f para que el giro sea extremadamente suave
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 2f * Time.deltaTime);
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir, transform.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 8f * Time.deltaTime);
         }
     }
 
-    private void JumIsNeeded()
+    void Move()
+    {
+        Vector3 horizontalVelocity = moveDir * speed;
+        Vector3 verticalVelocity = Vector3.Project(rb.linearVelocity, transform.up);
+
+        rb.linearVelocity = horizontalVelocity + verticalVelocity;
+    }
+
+    void JumpIfNeeded()
     {
         if (canJump && Input.GetKeyDown(KeyCode.Space))
         {
-            // Usamos transform.up porque el "arriba" del mundo ya no sirve en el planeta
-            this.GetComponent<Rigidbody>().AddForce(transform.up * jumpForce);
+            rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            canJump = false;
         }
     }
 
-    // Detección de suelo usando la capa "ground"
     void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
+        {
+            canJump = true;
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
         {
