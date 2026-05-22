@@ -4,7 +4,7 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
     public float speed = 10f;
-    public float jumpForce = 18f;
+    public float jumpForce = 30f;
 
     private Rigidbody rb;
     private bool canJump;
@@ -14,8 +14,6 @@ public class Jump : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
-        // IMPORTANTE: la gravedad la hace el planeta, no Unity
         rb.useGravity = false;
     }
 
@@ -33,18 +31,10 @@ public class Jump : MonoBehaviour
     void MovementInput()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 camForward = Vector3.ProjectOnPlane(Camera.main.transform.forward, transform.up).normalized;
         Vector3 camRight = Vector3.ProjectOnPlane(Camera.main.transform.right, transform.up).normalized;
 
-        moveDir = (camForward * v + camRight * h).normalized;
-
-        if (moveDir.magnitude > 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir, transform.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 8f * Time.deltaTime);
-        }
+        moveDir = camRight * h;
     }
 
     void Move()

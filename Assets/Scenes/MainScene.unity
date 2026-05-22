@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 269967744bbed1849a317b8175dc3f43, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Jump
   speed: 10
-  jumpForce: 400
+  jumpForce: 40
 --- !u!4 &974973778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
@@ -165,11 +165,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &974973780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977074819}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13341069, y: 0.00059151126, z: -0.00007950395, w: -0.9910607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0077173933, y: 28.325127, z: -16.863201}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -266,7 +266,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 85
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -297,8 +297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camera
   jugador: {fileID: 974973778}
-  distancia: 10
-  altura: 5
+  offset: {x: 0, y: 10, z: -22}
+  suavizado: 5
+  inclinacionAbajo: 10
 --- !u!1001 &1149976510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,6 +510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien feliz
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -549,11 +554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6846305681386609905, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.8
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 6846305681386609905, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1099
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6846305681386609905, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -587,6 +592,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockFloating04
       objectReference: {fileID: 0}
+    - target: {fileID: 6846305681386897617, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846305681386897619, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846305681386897621, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846305681386897623, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6846305681388903953, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -605,14 +626,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6846305681386897617, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1207139955}
+      addedObject: {fileID: 1207139958}
   m_SourcePrefab: {fileID: 100100000, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
 --- !u!1 &1207139954 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6846305681386897617, guid: 11aa281cc23caa147bfa0d4108fc202d, type: 3}
   m_PrefabInstance: {fileID: 1207139953}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1207139955
+--- !u!65 &1207139958
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -631,7 +652,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 25, y: 25, z: 25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1835262650
 GameObject:
@@ -759,7 +780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca06b523cbdd9664088d6608c7e6eca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attractor
-  gravedad: -100
+  gravityForce: 35
+  rotationSpeed: 8
 --- !u!135 &1835262656
 SphereCollider:
   m_ObjectHideFlags: 0
