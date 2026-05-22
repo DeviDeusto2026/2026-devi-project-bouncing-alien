@@ -8,19 +8,30 @@ public class Gravity : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         Rigidbody rb = other.GetComponent<Rigidbody>();
+        Jump playerJump = other.GetComponent<Jump>(); // Buscamos el estado del jugador
 
         if (rb != null)
         {
-            Vector3 directionToCenter = (transform.position - other.transform.position).normalized;
+            Vector3 gravityDirection;
 
-            rb.AddForce(directionToCenter * gravityForce, ForceMode.Acceleration);
+            // ESTADO: ¿El jugador está en una plataforma?
+            if (playerJump != null && playerJump.currentPlatformZone != null)
+            {
+                // Gravedad Plana: Tira hacia abajo relativo a la plataforma
+                gravityDirection = -playerJump.currentPlatformZone.up;
+            }
+            else
+            {
+                // Gravedad Esférica: Tira hacia el centro del planeta
+                gravityDirection = (transform.position - other.transform.position).normalized;
+            }
 
-            Quaternion targetRotation =
-                Quaternion.FromToRotation(other.transform.up, -directionToCenter) * other.transform.rotation;
+            // Aplicamos la fuerza de gravedad correspondiente
+            rb.AddForce(gravityDirection * gravityForce, ForceMode.Acceleration);
 
-            rb.MoveRotation(
-                Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime)
-            );
+            // Rotamos al personaje para que sus pies apunten a la gravedad
+            Quaternion targetRotation = Quaternion.FromToRotation(other.transform.up, -gravityDirection) * other.transform.rotation;
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
         }
     }
 }
