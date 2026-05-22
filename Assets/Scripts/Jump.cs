@@ -71,25 +71,21 @@ public class Jump : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground")) canJump = false;
     }
 
-    // NUEVO: Detectar el cubo invisible de la plataforma
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
+        // Solo registramos la zona si el objeto tiene el script Platform (el túnel)
         if (other.GetComponent<Platform>() != null)
         {
-            // Guardamos la plataforma como nuestra nueva gravedad local
             currentPlatformZone = other.transform;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Platform>() != null)
+        // Al salir del túnel, limpiamos la zona para devolver el control a los planetas
+        if (other.GetComponent<Platform>() != null && currentPlatformZone == other.transform)
         {
-            // Al salir, volvemos a la gravedad del planeta (null)
-            if (currentPlatformZone == other.transform)
-            {
-                currentPlatformZone = null;
-            }
+            currentPlatformZone = null;
         }
     }
 }
