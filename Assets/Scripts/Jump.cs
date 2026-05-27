@@ -88,4 +88,10 @@ public class Jump : MonoBehaviour
             currentPlatformZone = null;
         }
     }
+    public void OrbJump(float orbForce)
+    {
+        rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
+        rb.AddForce(transform.up * orbForce, ForceMode.Impulse);
+        canJump = false;
+    }
 }
