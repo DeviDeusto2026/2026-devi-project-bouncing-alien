@@ -20,8 +20,8 @@ public class Gravity : MonoBehaviour
             {
                 if (GetComponent<Platform>() == null) return;
 
-                // 1. La fuerza lo "chupa" hacia el Planeta 2 (hacia arriba en el mapa global)
-                gravityDirection = Vector3.up;
+                // 1. La fuerza usa la dirección local de la plataforma/túnel actual
+                gravityDirection = playerJump.currentPlatformZone.up;
 
                 // 2. Aplicamos la fuerza del planeta de destino para que lo atraiga
                 Platform platformScript = playerJump.currentPlatformZone.GetComponent<Platform>();
@@ -33,8 +33,6 @@ public class Gravity : MonoBehaviour
                 rb.AddForce(gravityDirection * finalForce, ForceMode.Acceleration);
 
                 // 3. ¡LA MAGIA DEL GIRO INVERTIDO!
-                // Hacemos que el personaje se oriente alineando su cabeza hacia el Planeta 1 
-                // y sus pies mirando hacia el Planeta 2 (boca abajo respecto al mundo entero)
                 Quaternion invertRotation = Quaternion.FromToRotation(other.transform.up, gravityDirection) * other.transform.rotation;
 
                 // Forzamos el giro rápido para que se dé la vuelta en el aire inmediatamente al entrar
