@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 
-public class GestorMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject mainMenuPanel;
