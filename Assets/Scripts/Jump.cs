@@ -9,6 +9,10 @@ public class Jump : MonoBehaviour
     // Variable para guardar la zona de gravedad actual
     public Transform currentPlatformZone;
 
+    [Header("ConfiguraciÃ³n de Sonido")]
+    public AudioSource playerAudioSource;
+    public AudioClip jumpSound;
+
     private Rigidbody rb;
     private bool canJump;
     private Vector3 moveDir;
@@ -49,19 +53,22 @@ public class Jump : MonoBehaviour
     {
         if (canJump && Input.GetKeyDown(KeyCode.Space))
         {
-            // Al saltar, dejamos de usar la zona especial Platform
             currentPlatformZone = null;
-
-            // Si estaba encima de una plataforma móvil, deja de ser hijo antes de saltar
             transform.SetParent(null);
 
             rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+
+            if (playerAudioSource != null && jumpSound != null)
+            {
+                playerAudioSource.PlayOneShot(jumpSound);
+            }
+
             canJump = false;
         }
     }
 
-    // Colisiones normales para el salto
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
@@ -69,7 +76,6 @@ public class Jump : MonoBehaviour
             canJump = true;
         }
 
-        // Si toca una plataforma móvil, se hace hijo para moverse con ella
         if (collision.gameObject.GetComponent<MovingPlatform>() != null ||
             collision.gameObject.GetComponent<MovingPlatformVertical>() != null)
         {
@@ -92,7 +98,6 @@ public class Jump : MonoBehaviour
             canJump = false;
         }
 
-        // Al salir de una plataforma móvil, deja de ser hijo
         if (collision.gameObject.GetComponent<MovingPlatform>() != null ||
             collision.gameObject.GetComponent<MovingPlatformVertical>() != null)
         {
@@ -102,7 +107,6 @@ public class Jump : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Solo registramos la zona si el objeto tiene el script Platform
         if (other.GetComponent<Platform>() != null)
         {
             currentPlatformZone = other.transform;
@@ -111,7 +115,6 @@ public class Jump : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // Al salir del túnel, limpiamos la zona para devolver el control a los planetas
         if (other.GetComponent<Platform>() != null && currentPlatformZone == other.transform)
         {
             currentPlatformZone = null;
@@ -120,14 +123,12 @@ public class Jump : MonoBehaviour
 
     public void OrbJump(float orbForce)
     {
-        // También limpiamos la zona especial si salta con orbe
         currentPlatformZone = null;
-
-        // Si estaba encima de una plataforma móvil, deja de ser hijo antes de saltar
         transform.SetParent(null);
 
         rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
         rb.AddForce(transform.up * orbForce, ForceMode.Impulse);
+
         canJump = false;
     }
 }

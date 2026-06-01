@@ -27,6 +27,20 @@ public class BossHealth : MonoBehaviour
 
         if (lives <= 0)
         {
+            GameObject musicaObj = GameObject.Find("AmbientMusic");
+
+            if (musicaObj != null)
+            {
+                AudioSource musicaSource = musicaObj.GetComponent<AudioSource>();
+                if (musicaSource != null)
+                {
+                    musicaSource.Pause();
+                }
+            }
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
             winPanel.SetActive(true);
             Time.timeScale = 0f;
             gameObject.SetActive(false);

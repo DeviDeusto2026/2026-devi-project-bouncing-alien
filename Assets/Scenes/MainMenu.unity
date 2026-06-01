@@ -4034,10 +4034,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuPrincipal
   mainMenuPanel: {fileID: 1072080805}
   optionsPanel: {fileID: 183222468}
+  pausePanel: {fileID: 0}
   mainAudioMixer: {fileID: 24100000, guid: accf40419bf09ef4da77306bd716cb81, type: 2}
   volumeSlider: {fileID: 643427133}
+  muteToggle: {fileID: 672019188}
   qualityDropdown: {fileID: 1768100647}
-  muteToggle: {fileID: 0}
 --- !u!4 &2091733833
 Transform:
   m_ObjectHideFlags: 0

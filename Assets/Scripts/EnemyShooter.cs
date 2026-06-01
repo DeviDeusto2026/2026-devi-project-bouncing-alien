@@ -58,6 +58,7 @@ public class EnemyShooter : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject tempBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Destroy(tempBullet, 5f);
     }
 }
