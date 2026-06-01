@@ -58,18 +58,22 @@ public class MainMenu : MonoBehaviour
     {
         mainAudioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("Volume", volume);
+        PlayerPrefs.Save(); // Forzamos el guardado
     }
 
     public void ToggleMute(bool isTicked)
     {
-        if (isTicked)
+        if (isTicked) // Si el Toggle está activado (escuchamos el juego)
         {
             SetVolume(volumeSlider.value);
+            PlayerPrefs.SetFloat("MuteMultiplier", 1f); // 1 significa sonido normal
         }
-        else
+        else // Si el Toggle está desactivado (queremos silencio)
         {
             mainAudioMixer.SetFloat("MasterVolume", -80f);
+            PlayerPrefs.SetFloat("MuteMultiplier", 0f); // 0 significa silencio absoluto
         }
+        PlayerPrefs.Save(); // Forzamos el guardado
     }
 
     // Quality
