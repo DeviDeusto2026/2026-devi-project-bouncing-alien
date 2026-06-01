@@ -10,6 +10,9 @@ public class BossHealth : MonoBehaviour
     private Collider[] colliders;
     private bool canTakeDamage = true;
 
+    [Header("Configuración de Victoria")]
+    public GameObject winPanel;
+
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
@@ -24,6 +27,8 @@ public class BossHealth : MonoBehaviour
 
         if (lives <= 0)
         {
+            winPanel.SetActive(true);
+            Time.timeScale = 0f;
             gameObject.SetActive(false);
             return;
         }
