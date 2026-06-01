@@ -24,6 +24,9 @@ public class OrbitEnemy : MonoBehaviour
         float xOffset = Mathf.Cos(currentAngle * Mathf.Deg2Rad) * orbitRadius;
         float yOffset = Mathf.Sin(currentAngle * Mathf.Deg2Rad) * orbitRadius;
 
-        transform.position = orbitCenter.position + (Vector3.right * xOffset) + (Vector3.up * yOffset);
+        Vector3 localX = orbitCenter.right * xOffset;
+        Vector3 localY = orbitCenter.up * yOffset;
+
+        transform.position = orbitCenter.position + localX + localY;
     }
 }

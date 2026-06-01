@@ -11062,7 +11062,7 @@ Transform:
   m_GameObject: {fileID: 303841365}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.328315, y: 2.605751, z: -0.0019775392}
+  m_LocalPosition: {x: -0.3425, y: 2.5865, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59198,7 +59198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.54
+      value: 21.32
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
       propertyPath: m_LocalPosition.z
@@ -84957,8 +84957,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitEnemy
   orbitCenter: {fileID: 303841366}
-  orbitRadius: 2
-  orbitSpeed: 50
+  orbitRadius: 6.5
+  orbitSpeed: 70
 --- !u!4 &1639905221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 174553506521038469, guid: aa84f87bd689f2f449d0189992bb132b, type: 3}
