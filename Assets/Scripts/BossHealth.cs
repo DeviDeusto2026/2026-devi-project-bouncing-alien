@@ -3,72 +3,82 @@ using System.Collections;
 
 public class BossHealth : MonoBehaviour
 {
-    public int lives = 3;
-    public float hideTime = 1f;
+    public int currentHealth = 3;
+    public float invulnerabilityDuration = 1f;
 
-    private Renderer[] renderers;
-    private Collider[] colliders;
-    private bool canTakeDamage = true;
+    [Header("Victory UI Settings")]
+    public GameObject victoryPanel;
 
-    [Header("Configuración de Victoria")]
-    public GameObject winPanel;
+    private Renderer[] bossRenderers;
+    private Collider[] bossColliders;
+    private AudioSource ambientMusicSource;
+    private bool isInvulnerable = false;
 
     void Start()
     {
-        renderers = GetComponentsInChildren<Renderer>();
-        colliders = GetComponentsInChildren<Collider>();
+        bossRenderers = GetComponentsInChildren<Renderer>();
+        bossColliders = GetComponentsInChildren<Collider>();
+
+        GameObject musicObject = GameObject.Find("AmbientMusic");
+        if (musicObject != null)
+        {
+            ambientMusicSource = musicObject.GetComponent<AudioSource>();
+        }
     }
 
     public void TakeHit()
     {
-        if (!canTakeDamage) return;
+        if (isInvulnerable) return;
 
-        lives--;
+        currentHealth--;
 
-        if (lives <= 0)
+        if (currentHealth <= 0)
         {
-            GameObject musicaObj = GameObject.Find("AmbientMusic");
-
-            if (musicaObj != null)
-            {
-                AudioSource musicaSource = musicaObj.GetComponent<AudioSource>();
-                if (musicaSource != null)
-                {
-                    musicaSource.Pause();
-                }
-            }
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-
-            winPanel.SetActive(true);
-            Time.timeScale = 0f;
-            gameObject.SetActive(false);
+            HandleVictory();
             return;
         }
 
-        StartCoroutine(HideAndReturn());
+        StartCoroutine(BecomeTemporarilyInvulnerable());
     }
 
-    IEnumerator HideAndReturn()
+    private void HandleVictory()
     {
-        canTakeDamage = false;
+        if (ambientMusicSource != null)
+        {
+            ambientMusicSource.Pause();
+        }
 
-        SetBossVisible(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
-        yield return new WaitForSeconds(hideTime);
-
-        SetBossVisible(true);
-
-        canTakeDamage = true;
+        victoryPanel.SetActive(true);
+        Time.timeScale = 0f;
+        gameObject.SetActive(false);
     }
 
-    void SetBossVisible(bool state)
+    private IEnumerator BecomeTemporarilyInvulnerable()
     {
-        foreach (Renderer r in renderers)
-            r.enabled = state;
+        isInvulnerable = true;
 
-        foreach (Collider c in colliders)
-            c.enabled = state;
+        SetBossVisibility(false);
+
+        yield return new WaitForSeconds(invulnerabilityDuration);
+
+        SetBossVisibility(true);
+
+        isInvulnerable = false;
+    }
+
+    private void SetBossVisibility(bool isVisible)
+    {
+        foreach (Renderer rendererComponent in bossRenderers)
+        {
+            rendererComponent.enabled = isVisible;
+        }
+
+        foreach (Collider colliderComponent in bossColliders)
+        {
+            colliderComponent.enabled = isVisible;
+        }
     }
 }

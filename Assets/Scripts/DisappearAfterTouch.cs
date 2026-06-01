@@ -4,47 +4,52 @@ using System.Collections;
 public class DisappearAfterTouch : MonoBehaviour
 {
     public float delayBeforeDisappear = 1f;
-    public float timeHidden = 2f;
+    public float hiddenDuration = 2f;
 
-    private Renderer[] renderers;
-    private Collider[] colliders;
-    private bool activated = false;
+    private Renderer[] platformRenderers;
+    private Collider[] platformColliders;
+    private bool isActivated = false;
 
     void Start()
     {
-        renderers = GetComponentsInChildren<Renderer>();
-        colliders = GetComponentsInChildren<Collider>();
+        platformRenderers = GetComponentsInChildren<Renderer>();
+        platformColliders = GetComponentsInChildren<Collider>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (activated) return;
+        if (isActivated) return;
 
-        if (collision.gameObject.GetComponent<Jump>() != null)
+        Jump player = collision.gameObject.GetComponent<Jump>();
+        if (player != null)
         {
-            activated = true;
+            isActivated = true;
             StartCoroutine(DisappearRoutine());
         }
     }
 
-    IEnumerator DisappearRoutine()
+    private IEnumerator DisappearRoutine()
     {
         yield return new WaitForSeconds(delayBeforeDisappear);
 
-        SetPlatform(false);
+        SetPlatformVisibility(false);
 
-        yield return new WaitForSeconds(timeHidden);
+        yield return new WaitForSeconds(hiddenDuration);
 
-        SetPlatform(true);
-        activated = false;
+        SetPlatformVisibility(true);
+        isActivated = false;
     }
 
-    void SetPlatform(bool state)
+    private void SetPlatformVisibility(bool isVisible)
     {
-        foreach (Renderer r in renderers)
-            r.enabled = state;
+        foreach (Renderer rendererComponent in platformRenderers)
+        {
+            rendererComponent.enabled = isVisible;
+        }
 
-        foreach (Collider c in colliders)
-            c.enabled = state;
+        foreach (Collider colliderComponent in platformColliders)
+        {
+            colliderComponent.enabled = isVisible;
+        }
     }
 }

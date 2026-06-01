@@ -6,16 +6,16 @@ public class BossShooter : MonoBehaviour
     public Transform firePoint;
     public Transform target;
 
-    [Header("Ráfaga")]
+    [Header("Burst Settings")]
     public int bulletsPerBurst = 5;
     public float timeBetweenBullets = 0.15f;
 
-    [Header("Pausa")]
-    public float timeBetweenBursts = 3f;
+    [Header("Cooldown Settings")]
+    public float cooldownDuration = 3f;
 
-    private int bulletsShot;
+    private int burstCounter;
     private float timer;
-    private bool resting;
+    private bool isResting;
 
     void Update()
     {
@@ -26,30 +26,44 @@ public class BossShooter : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        if (resting)
+        if (isResting)
         {
-            if (timer >= timeBetweenBursts)
-            {
-                resting = false;
-                bulletsShot = 0;
-                timer = 0f;
-            }
-
+            HandleCooldown();
             return;
         }
 
+        HandleBurstShooting();
+    }
+
+    private void HandleCooldown()
+    {
+        if (timer >= cooldownDuration)
+        {
+            isResting = false;
+            burstCounter = 0;
+            timer = 0f;
+        }
+    }
+
+    private void HandleBurstShooting()
+    {
         if (timer >= timeBetweenBullets)
         {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-            bulletsShot++;
+            Shoot();
+            burstCounter++;
             timer = 0f;
 
-            if (bulletsShot >= bulletsPerBurst)
+            if (burstCounter >= bulletsPerBurst)
             {
-                resting = true;
+                isResting = true;
                 timer = 0f;
             }
         }
+    }
+
+    private void Shoot()
+    {
+        GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Destroy(newBullet, 5f);
     }
 }

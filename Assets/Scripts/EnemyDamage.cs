@@ -4,13 +4,13 @@ public class EnemyDamage : MonoBehaviour
 {
     public int damage = 1;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth = collider.GetComponent<PlayerHealth>();
 
-        if (health != null)
+        if (playerHealth != null)
         {
-            health.TakeDamage(damage);
+            playerHealth.TakeDamage(damage);
         }
     }
 }

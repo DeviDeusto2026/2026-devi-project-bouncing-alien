@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.2
-  timeHidden: 2
+  hiddenDuration: 2
 --- !u!4 &78849042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -647,8 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0287aa2081eb8489b0ec24b267134d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  distance: 6
-  speed: 1.5
+  movementDistance: 6
+  movementSpeed: 1.5
 --- !u!4 &119263962 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7255981948910495402, guid: 90ea5581ba066e6459c81bfbf64c9576, type: 3}
@@ -10516,7 +10516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 1
+  hiddenDuration: 2
 --- !u!4 &194853031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -10952,8 +10952,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d3297e6489007428be32d43d1ebc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portal
-  destino: {fileID: 815516488}
-  gravedadPlanetaDestino: {fileID: 838978562}
+  destinationTarget: {fileID: 815516488}
+  destinationPlanetGravity: {fileID: 838978562}
 --- !u!65 &300724646
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11410,8 +11410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d3297e6489007428be32d43d1ebc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portal
-  destino: {fileID: 575929750}
-  gravedadPlanetaDestino: {fileID: 838978562}
+  destinationTarget: {fileID: 575929750}
+  destinationPlanetGravity: {fileID: 1554844436}
 --- !u!65 &326014448
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11683,7 +11683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 1
+  hiddenDuration: 2
 --- !u!4 &354625243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -21516,8 +21516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0287aa2081eb8489b0ec24b267134d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  distance: 6
-  speed: 1.5
+  movementDistance: 6
+  movementSpeed: 1.5
 --- !u!4 &399416008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7255981948910495402, guid: 90ea5581ba066e6459c81bfbf64c9576, type: 3}
@@ -21540,8 +21540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a02d6449079484c8e5e66e236345a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingEnemyHorizontal
-  distance: 3
-  speed: 1.5
+  movementDistance: 3
+  movementSpeed: 1.5
 --- !u!4 &415723333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 174553506521038469, guid: aa84f87bd689f2f449d0189992bb132b, type: 3}
@@ -21565,7 +21565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 1
+  hiddenDuration: 2
 --- !u!4 &432073111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -21875,7 +21875,7 @@ MonoBehaviour:
   target: {fileID: 974973778}
   bulletsPerBurst: 5
   timeBetweenBullets: 0.15
-  timeBetweenBursts: 3
+  cooldownDuration: 3
 --- !u!114 &483447230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21888,9 +21888,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ac4d7ef2423b342a990f7f7d208089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
-  lives: 3
-  hideTime: 1
-  winPanel: {fileID: 2131974115}
+  currentHealth: 3
+  invulnerabilityDuration: 1
+  victoryPanel: {fileID: 2131974115}
 --- !u!135 &483447232
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -48409,8 +48409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a02d6449079484c8e5e66e236345a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingEnemyHorizontal
-  distance: 3
-  speed: 1.5
+  movementDistance: 3
+  movementSpeed: 1.5
 --- !u!1001 &947020018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48539,8 +48539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d3297e6489007428be32d43d1ebc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portal
-  destino: {fileID: 123868052}
-  gravedadPlanetaDestino: {fileID: 1104448068}
+  destinationTarget: {fileID: 123868052}
+  destinationPlanetGravity: {fileID: 1104448068}
 --- !u!65 &953060157
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48636,7 +48636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967cebdd5cc49da4287be7093a68b13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Jump
-  speed: 10
+  movementSpeed: 10
   jumpForce: 40
   currentPlatformZone: {fileID: 0}
   playerAudioSource: {fileID: 974973782}
@@ -48706,7 +48706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24cf6106343790245adea84be2fdfd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxLives: 3
+  maxHealth: 3
   respawnPoint: {fileID: 0}
   hudManager: {fileID: 1430411209}
   gameOverPanel: {fileID: 1890725712}
@@ -48912,10 +48912,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192594c960583fb40af2f95c485766fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camera
-  jugador: {fileID: 974973778}
+  playerTarget: {fileID: 974973778}
   offset: {x: 0, y: 10, z: -22}
-  suavizado: 5
-  inclinacionAbajo: 10
+  smoothSpeed: 5
+  downwardTilt: 10
 --- !u!1 &1001925106
 GameObject:
   m_ObjectHideFlags: 0
@@ -54086,8 +54086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a02d6449079484c8e5e66e236345a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingEnemyHorizontal
-  distance: 4
-  speed: 1.5
+  movementDistance: 3
+  movementSpeed: 1.5
 --- !u!4 &1153002512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 174553506521038469, guid: aa84f87bd689f2f449d0189992bb132b, type: 3}
@@ -54244,8 +54244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a02d6449079484c8e5e66e236345a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingEnemyHorizontal
-  distance: 4
-  speed: 1.5
+  movementDistance: 3
+  movementSpeed: 1.5
 --- !u!4 &1191806101 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 174553506521038469, guid: aa84f87bd689f2f449d0189992bb132b, type: 3}
@@ -59198,7 +59198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 873.6
+      value: 1781
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0bc0bbb6512e40141b37e2bc86fb2069, type: 3}
       propertyPath: m_LocalPosition.z
@@ -59311,8 +59311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d3297e6489007428be32d43d1ebc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portal
-  destino: {fileID: 1328530010}
-  gravedadPlanetaDestino: {fileID: 838978562}
+  destinationTarget: {fileID: 1328530010}
+  destinationPlanetGravity: {fileID: 1972389334}
 --- !u!65 &1205486237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59419,7 +59419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.2
-  timeHidden: 2
+  hiddenDuration: 2
 --- !u!4 &1243091134 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -64699,7 +64699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 1
+  hiddenDuration: 2
 --- !u!4 &1332924455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -69559,7 +69559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.2
-  timeHidden: 2
+  hiddenDuration: 2
 --- !u!4 &1347373708 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -74981,7 +74981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 2
+  hiddenDuration: 2
 --- !u!4 &1458730594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}
@@ -75004,8 +75004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398c3a718374e954ab9e6765452e68fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatformVertical
-  distance: 5
-  speed: 1.5
+  movementDistance: 5
+  movementSpeed: 1.5
 --- !u!4 &1491885046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7255981948910495402, guid: 90ea5581ba066e6459c81bfbf64c9576, type: 3}
@@ -79928,6 +79928,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5323065663610379758, guid: 84655f60cfcc72944b3af391a9059e33, type: 3}
   m_PrefabInstance: {fileID: 1654530540}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1554844436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8814388714470313575, guid: 84655f60cfcc72944b3af391a9059e33, type: 3}
+  m_PrefabInstance: {fileID: 1654530540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca06b523cbdd9664088d6608c7e6eca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attractor
 --- !u!1001 &1566933862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84945,9 +84956,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d906640b4f370b44fad4d39e4da64f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitEnemy
-  center: {fileID: 303841366}
-  radius: 7
-  speed: 80
+  orbitCenter: {fileID: 303841366}
+  orbitRadius: 2
+  orbitSpeed: 50
 --- !u!4 &1639905221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 174553506521038469, guid: aa84f87bd689f2f449d0189992bb132b, type: 3}
@@ -85332,8 +85343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12343391922c3dc43b86b79de7205835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingAsteroidWall
-  distance: 4
-  speed: 2
+  movementDistance: 4
+  movementSpeed: 1
 --- !u!1 &1739955315 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4105063108513026227, guid: 90ea5581ba066e6459c81bfbf64c9576, type: 3}
@@ -85356,8 +85367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0287aa2081eb8489b0ec24b267134d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  distance: 6
-  speed: 1.5
+  movementDistance: 6
+  movementSpeed: 1.5
 --- !u!1001 &1786628862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91589,6 +91600,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5323065663610379758, guid: 84655f60cfcc72944b3af391a9059e33, type: 3}
   m_PrefabInstance: {fileID: 1179649856}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1972389334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8814388714470313575, guid: 84655f60cfcc72944b3af391a9059e33, type: 3}
+  m_PrefabInstance: {fileID: 1179649856}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca06b523cbdd9664088d6608c7e6eca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attractor
 --- !u!1 &1990673143
 GameObject:
   m_ObjectHideFlags: 0
@@ -92299,7 +92321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisappearAfterTouch
   delayBeforeDisappear: 0.5
-  timeHidden: 1
+  hiddenDuration: 2
 --- !u!4 &2128740483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6070593732346486575, guid: dc8b795222980cc4ba5cffb984028196, type: 3}

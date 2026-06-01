@@ -6,12 +6,12 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Panels Menu Principal")]
+    [Header("Main Menu Panels")]
     public GameObject mainMenuPanel;
     public GameObject optionsPanel;
 
-    [Header("Panels Escena de Juego")]
-    public GameObject pausePanel; // Asignar solo en la escena de juego
+    [Header("Gameplay Panels")]
+    public GameObject pausePanel;
 
     [Header("Audio Settings")]
     public AudioMixer mainAudioMixer;
@@ -30,20 +30,21 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         float savedVolume = PlayerPrefs.GetFloat("Volume", 0.75f);
-        if (volumeSlider != null) volumeSlider.value = savedVolume;
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = savedVolume;
+        }
         SetVolume(savedVolume);
 
-        // Buscamos la música de fondo en la escena (si existe)
-        GameObject musicaObj = GameObject.Find("AmbientMusic");
-        if (musicaObj != null)
+        GameObject musicObject = GameObject.Find("AmbientMusic");
+        if (musicObject != null)
         {
-            ambientMusicSource = musicaObj.GetComponent<AudioSource>();
+            ambientMusicSource = musicObject.GetComponent<AudioSource>();
         }
     }
 
     void Update()
     {
-        // Detectamos el botón Escape SOLO si tenemos un panel de pausa asignado en esta escena
         if (pausePanel != null && Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -57,24 +58,36 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // Navegation Menus
+    // Menu Navigation
     public void OpenOptions()
     {
-        if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
-        if (optionsPanel != null) optionsPanel.SetActive(true);
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(false);
+        }
+        if (optionsPanel != null)
+        {
+            optionsPanel.SetActive(true);
+        }
     }
 
     public void CloseOptions()
     {
-        if (optionsPanel != null) optionsPanel.SetActive(false);
-        if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
+        if (optionsPanel != null)
+        {
+            optionsPanel.SetActive(false);
+        }
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(true);
+        }
     }
 
     // Actions
     public void PlayGame()
     {
-        Time.timeScale = 1f; // Descongelamos el tiempo antes de cargar la partida
-        SceneManager.LoadScene("MainScene"); // Asegúrate de que se llama así tu escena de juego
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainScene");
     }
 
     public void QuitGame()
@@ -82,13 +95,13 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    // Lógica de Pausa (Para usar en el juego)
+    // Pause Logic
     public void PauseGame()
     {
         if (pausePanel == null) return;
 
         pausePanel.SetActive(true);
-        Time.timeScale = 0f; // Congela el juego
+        Time.timeScale = 0f;
         isPaused = true;
 
         Cursor.visible = true;
@@ -96,7 +109,7 @@ public class MainMenu : MonoBehaviour
 
         if (ambientMusicSource != null && ambientMusicSource.isPlaying)
         {
-            ambientMusicSource.Pause(); // Pausa la música relajante
+            ambientMusicSource.Pause();
         }
     }
 
@@ -105,7 +118,7 @@ public class MainMenu : MonoBehaviour
         if (pausePanel == null) return;
 
         pausePanel.SetActive(false);
-        Time.timeScale = 1f; // Devuelve el tiempo a la normalidad
+        Time.timeScale = 1f;
         isPaused = false;
 
         Cursor.visible = false;
@@ -113,17 +126,17 @@ public class MainMenu : MonoBehaviour
 
         if (ambientMusicSource != null && !ambientMusicSource.isPlaying)
         {
-            ambientMusicSource.UnPause(); // Reanuda la música
+            ambientMusicSource.UnPause();
         }
     }
 
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f; // ¡Muy importante! Descongelamos el tiempo antes de ir al menú
-        SceneManager.LoadScene("MainMenuScene"); // Pon el nombre exacto de tu escena de menú
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenuScene");
     }
 
-    // Audio
+    // Audio Controls
     public void SetVolume(float volume)
     {
         if (mainAudioMixer != null)
@@ -134,13 +147,16 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void ToggleMute(bool isTicked)
+    public void ToggleMute(bool isSoundEnabled)
     {
         if (mainAudioMixer == null) return;
 
-        if (isTicked)
+        if (isSoundEnabled)
         {
-            if (volumeSlider != null) SetVolume(volumeSlider.value);
+            if (volumeSlider != null)
+            {
+                SetVolume(volumeSlider.value);
+            }
             PlayerPrefs.SetFloat("MuteMultiplier", 1f);
         }
         else
@@ -151,7 +167,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Quality
+    // Graphics Quality
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);

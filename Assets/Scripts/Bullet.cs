@@ -16,13 +16,13 @@ public class Bullet : MonoBehaviour
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth = collider.GetComponent<PlayerHealth>();
 
-        if (health != null)
+        if (playerHealth != null)
         {
-            health.TakeDamage(damage);
+            playerHealth.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

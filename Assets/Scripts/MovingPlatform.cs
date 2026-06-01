@@ -2,21 +2,19 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public float distance = 6f;
-    public float speed = 1.5f;
+    public float movementDistance = 6f;
+    public float movementSpeed = 1.5f;
 
-    private Vector3 startPosition;
+    private Vector3 initialPosition;
 
     void Start()
     {
-        startPosition = transform.position;
+        initialPosition = transform.position;
     }
 
     void Update()
     {
-        float movement = Mathf.Sin(Time.time * speed) * distance;
-
-        // Movimiento recto izquierda/derecha en el mundo
-        transform.position = startPosition + new Vector3(movement, 0f, 0f);
+        float offset = Mathf.Sin(Time.time * movementSpeed) * movementDistance;
+        transform.position = initialPosition + Vector3.right * offset;
     }
 }

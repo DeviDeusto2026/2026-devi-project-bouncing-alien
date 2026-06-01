@@ -1,21 +1,22 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxLives = 3;
+    public int maxHealth = 3;
     public Transform respawnPoint;
 
     [Header("Linked HUD")]
     [Tooltip("Reference to the HUD manager script in the Canvas")]
     public HealthHUDManager hudManager;
 
-    private int currentLives;
-    private Rigidbody rb;
-
     [Header("Game Over Settings")]
     [Tooltip("Reference to the Game Over Panel in the Canvas")]
     public GameObject gameOverPanel;
+
+    private int currentHealth;
+    private Rigidbody rb;
 
     void Start()
     {
@@ -25,31 +26,30 @@ public class PlayerHealth : MonoBehaviour
 
     private void InitializeHealth()
     {
-        currentLives = maxLives;
+        currentHealth = maxHealth;
 
         if (hudManager != null)
         {
-            hudManager.UpdateHeartsHUD(currentLives);
+            hudManager.UpdateHeartsHUD(currentHealth);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        currentLives -= damage;
-        Debug.Log("Remaining lives: " + currentLives);
+        currentHealth -= damage;
 
         if (hudManager != null)
         {
-            hudManager.UpdateHeartsHUD(currentLives);
+            hudManager.UpdateHeartsHUD(currentHealth);
         }
 
-        if (currentLives <= 0)
+        if (currentHealth <= 0)
         {
             TriggerGameOver();
         }
     }
 
-    void Respawn()
+    public void Respawn()
     {
         InitializeHealth();
 
@@ -65,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void TriggerGameOver()
+    private void TriggerGameOver()
     {
         if (gameOverPanel != null)
         {
@@ -80,12 +80,12 @@ public class PlayerHealth : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 }

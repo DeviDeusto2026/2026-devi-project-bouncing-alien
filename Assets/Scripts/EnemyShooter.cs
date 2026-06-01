@@ -5,23 +5,16 @@ public class EnemyShooter : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-    [Header("Ráfaga")]
+    [Header("Burst Settings")]
     public int bulletsPerBurst = 5;
     public float timeBetweenBullets = 0.15f;
 
-    [Header("Pausa")]
-    public float timeBetweenBursts = 3f;
+    [Header("Cooldown Settings")]
+    public float cooldownDuration = 3f;
 
-    private int bulletsShot;
+    private int burstCounter;
     private float timer;
-    private bool resting;
-
-    void Start()
-    {
-        bulletsShot = 0;
-        timer = 0f;
-        resting = false;
-    }
+    private bool isResting;
 
     void Update()
     {
@@ -30,35 +23,44 @@ public class EnemyShooter : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        if (resting)
+        if (isResting)
         {
-            if (timer >= timeBetweenBursts)
-            {
-                resting = false;
-                bulletsShot = 0;
-                timer = 0f;
-            }
-
+            HandleCooldown();
             return;
         }
 
+        HandleBurstShooting();
+    }
+
+    private void HandleCooldown()
+    {
+        if (timer >= cooldownDuration)
+        {
+            isResting = false;
+            burstCounter = 0;
+            timer = 0f;
+        }
+    }
+
+    private void HandleBurstShooting()
+    {
         if (timer >= timeBetweenBullets)
         {
             Shoot();
-            bulletsShot++;
+            burstCounter++;
             timer = 0f;
 
-            if (bulletsShot >= bulletsPerBurst)
+            if (burstCounter >= bulletsPerBurst)
             {
-                resting = true;
+                isResting = true;
                 timer = 0f;
             }
         }
     }
 
-    void Shoot()
+    private void Shoot()
     {
-        GameObject tempBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Destroy(tempBullet, 5f);
+        GameObject temporaryBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Destroy(temporaryBullet, 5f);
     }
 }

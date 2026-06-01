@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class OrbitEnemy : MonoBehaviour
 {
-    public Transform center;
-    public float radius = 2f;
-    public float speed = 50f;
+    public Transform orbitCenter;
+    public float orbitRadius = 2f;
+    public float orbitSpeed = 50f;
 
-    private float angle;
+    private float currentAngle;
 
     void Start()
     {
-        if (center == null)
+        if (orbitCenter == null)
         {
-            Debug.LogWarning("Falta asignar el centro de órbita");
+            Debug.LogWarning("OrbitCenter is not assigned on " + gameObject.name);
             enabled = false;
         }
     }
 
     void Update()
     {
-        angle += speed * Time.deltaTime;
+        currentAngle += orbitSpeed * Time.deltaTime;
 
-        float x = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
-        float y = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+        float xOffset = Mathf.Cos(currentAngle * Mathf.Deg2Rad) * orbitRadius;
+        float yOffset = Mathf.Sin(currentAngle * Mathf.Deg2Rad) * orbitRadius;
 
-        transform.position = center.position + new Vector3(x, y, 0);
+        transform.position = orbitCenter.position + (Vector3.right * xOffset) + (Vector3.up * yOffset);
     }
 }

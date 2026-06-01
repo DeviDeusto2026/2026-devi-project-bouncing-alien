@@ -2,31 +2,34 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [Header("Configuración del Destino")]
-    [Tooltip("El objeto vacío (Transform) que marca dónde aparecerá el jugador")]
-    public Transform destino;
+    [Header("Destination Settings")]
+    [Tooltip("The empty object (Transform) marking where the player will appear.")]
+    public Transform destinationTarget;
 
-    [Header("Gravedad del planeta destino")]
-    public Gravity gravedadPlanetaDestino;
+    [Header("Gravity Settings")]
+    [Tooltip("Reference to the Gravity script of the destination planet.")]
+    public Gravity destinationPlanetGravity;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        Jump player = other.GetComponent<Jump>();
-        Rigidbody rb = other.GetComponent<Rigidbody>();
+        Jump player = collider.GetComponent<Jump>();
+        Rigidbody rb = collider.GetComponent<Rigidbody>();
 
-        if (player != null && rb != null && destino != null)
+        if (player != null && rb != null && destinationTarget != null)
         {
             player.currentPlatformZone = null;
 
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
-            other.transform.position = destino.position;
+            collider.transform.position = destinationTarget.position;
 
-            if (gravedadPlanetaDestino != null)
-                gravedadPlanetaDestino.enabled = true;
+            if (destinationPlanetGravity != null)
+            {
+                destinationPlanetGravity.enabled = true;
+            }
 
-            other.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+            collider.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
         }
     }
 }

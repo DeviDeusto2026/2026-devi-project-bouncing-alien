@@ -3,58 +3,53 @@ using UnityEngine;
 public class JumpOrb : MonoBehaviour
 {
     public float orbForce = 35f;
-    [Header("Configuración de Sonido")]
+
+    [Header("Audio Settings")]
     public AudioClip bounceSound;
 
-    private bool playerInside = false;
+    private bool isPlayerInside = false;
     private Jump playerJump;
 
     void Update()
     {
-        if (playerInside && Input.GetKeyDown(KeyCode.Space))
+        if (isPlayerInside && Input.GetKeyDown(KeyCode.Space))
         {
             if (playerJump != null)
             {
                 playerJump.OrbJump(orbForce);
 
-                // Reproduce el sonido respetando el control de volumen y el botón de Mute
                 if (bounceSound != null)
                 {
-                    // 1. Leemos el volumen del Slider (por defecto 0.75f si no existe)
-                    float volumenSlider = PlayerPrefs.GetFloat("Volume", 0.75f);
+                    float sliderVolume = PlayerPrefs.GetFloat("Volume", 0.75f);
+                    float muteMultiplier = PlayerPrefs.GetFloat("MuteMultiplier", 1f);
+                    float finalVolume = sliderVolume * muteMultiplier;
 
-                    // 2. Leemos si el botón de mute está activado (por defecto 1f si no existe)
-                    float multiplicadorMute = PlayerPrefs.GetFloat("MuteMultiplier", 1f);
-
-                    // 3. Calculamos el volumen final real (Volumen x Mute)
-                    float volumenFinal = volumenSlider * multiplicadorMute;
-
-                    AudioSource.PlayClipAtPoint(bounceSound, transform.position, volumenFinal);
+                    AudioSource.PlayClipAtPoint(bounceSound, transform.position, finalVolume);
                 }
 
-                playerInside = false;
+                isPlayerInside = false;
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        Jump jumpScript = other.GetComponent<Jump>();
+        Jump jumpScript = collider.GetComponent<Jump>();
 
         if (jumpScript != null)
         {
-            playerInside = true;
+            isPlayerInside = true;
             playerJump = jumpScript;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collider)
     {
-        Jump jumpScript = other.GetComponent<Jump>();
+        Jump jumpScript = collider.GetComponent<Jump>();
 
         if (jumpScript != null && jumpScript == playerJump)
         {
-            playerInside = false;
+            isPlayerInside = false;
             playerJump = null;
         }
     }

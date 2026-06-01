@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class MovingAsteroidWall : MonoBehaviour
 {
-    [Header("Movimiento lateral")]
-    public float distance = 4f;
-    public float speed = 1f;
+    [Header("Lateral Movement Settings")]
+    public float movementDistance = 4f;
+    public float movementSpeed = 1f;
 
-    private Vector3 startPosition;
+    private Vector3 initialPosition;
 
     void Start()
     {
-        startPosition = transform.position;
+        initialPosition = transform.position;
     }
 
     void Update()
     {
-        float offset = Mathf.Sin(Time.time * speed) * distance;
-        transform.position = startPosition + Vector3.right * offset;
+        float offset = Mathf.Sin(Time.time * movementSpeed) * movementDistance;
+        transform.position = initialPosition + Vector3.right * offset;
     }
 }

@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    [Header("Ajustes de Aceleración")]
-    [Tooltip("Multiplica la fuerza de gravedad dentro de este túnel")]
+    [Header("Acceleration Settings")]
+    [Tooltip("Multiplies the gravity force inside this tunnel.")]
     public float forceMultiplier = 2f;
 
-    [Header("Ajustes de Frenado")]
-    [Tooltip("Porcentaje de freno al llegar al final del túnel (0 = nada, 1 = parada total)")]
+    [Header("Braking Settings")]
+    [Tooltip("Braking percentage upon reaching the end of the tunnel (0 = none, 1 = total stop).")]
     [Range(0f, 1f)]
     public float brakeFactor = 0.5f;
 }

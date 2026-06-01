@@ -3,19 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Jump : MonoBehaviour
 {
-    public float speed = 10f;
+    public float movementSpeed = 10f;
     public float jumpForce = 30f;
 
-    // Variable para guardar la zona de gravedad actual
     public Transform currentPlatformZone;
 
-    [Header("Configuración de Sonido")]
+    [Header("Audio Settings")]
     public AudioSource playerAudioSource;
     public AudioClip jumpSound;
 
     private Rigidbody rb;
-    private bool canJump;
-    private Vector3 moveDir;
+    private bool isGrounded;
+    private Vector3 moveDirection;
 
     void Start()
     {
@@ -26,32 +25,32 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        MovementInput();
-        JumpIfNeeded();
+        HandleMovementInput();
+        HandleJump();
     }
 
     void FixedUpdate()
     {
-        Move();
+        MovePlayer();
     }
 
-    void MovementInput()
+    private void HandleMovementInput()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        Vector3 camRight = Vector3.ProjectOnPlane(Camera.main.transform.right, transform.up).normalized;
-        moveDir = camRight * h;
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        Vector3 cameraRight = Vector3.ProjectOnPlane(Camera.main.transform.right, transform.up).normalized;
+        moveDirection = cameraRight * horizontalInput;
     }
 
-    void Move()
+    private void MovePlayer()
     {
-        Vector3 horizontalVelocity = moveDir * speed;
+        Vector3 horizontalVelocity = moveDirection * movementSpeed;
         Vector3 verticalVelocity = Vector3.Project(rb.linearVelocity, transform.up);
         rb.linearVelocity = horizontalVelocity + verticalVelocity;
     }
 
-    void JumpIfNeeded()
+    private void HandleJump()
     {
-        if (canJump && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             currentPlatformZone = null;
             transform.SetParent(null);
@@ -59,21 +58,20 @@ public class Jump : MonoBehaviour
             rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-
             if (playerAudioSource != null && jumpSound != null)
             {
                 playerAudioSource.PlayOneShot(jumpSound);
             }
 
-            canJump = false;
+            isGrounded = false;
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
         {
-            canJump = true;
+            isGrounded = true;
         }
 
         if (collision.gameObject.GetComponent<MovingPlatform>() != null ||
@@ -83,19 +81,19 @@ public class Jump : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
         {
-            canJump = true;
+            isGrounded = true;
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("ground"))
         {
-            canJump = false;
+            isGrounded = false;
         }
 
         if (collision.gameObject.GetComponent<MovingPlatform>() != null ||
@@ -105,17 +103,17 @@ public class Jump : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.GetComponent<Platform>() != null)
+        if (collider.GetComponent<Platform>() != null)
         {
-            currentPlatformZone = other.transform;
+            currentPlatformZone = collider.transform;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collider)
     {
-        if (other.GetComponent<Platform>() != null && currentPlatformZone == other.transform)
+        if (collider.GetComponent<Platform>() != null && currentPlatformZone == collider.transform)
         {
             currentPlatformZone = null;
         }
@@ -129,6 +127,6 @@ public class Jump : MonoBehaviour
         rb.linearVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, transform.up);
         rb.AddForce(transform.up * orbForce, ForceMode.Impulse);
 
-        canJump = false;
+        isGrounded = false;
     }
 }

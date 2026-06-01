@@ -4,9 +4,9 @@ public class BossWeakPoint : MonoBehaviour
 {
     public BossHealth bossHealth;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        Jump player = other.GetComponent<Jump>();
+        Jump player = collider.GetComponent<Jump>();
 
         if (player != null && bossHealth != null)
         {
